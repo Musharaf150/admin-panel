@@ -1,5 +1,5 @@
+import { TotalUsersCountProps } from '@/types'
 import Image from 'next/image'
-import React from 'react'
 
 const TotalUserBox = ({totalCurrentUsers}:TotalUsersCountProps) => {
   return (

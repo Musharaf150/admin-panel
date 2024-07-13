@@ -1,6 +1,7 @@
 import React from 'react'
 import { Input } from './ui/input'
 import { Button } from './ui/button'
+import { HeaderCartProps } from '@/types'
 
 const Headercart = ({btnTitle}:HeaderCartProps) => {
   return (
