@@ -135,3 +135,26 @@ export const transactionCategoryStyles = {
     chipBackgroundColor: "bg-inherit",
   },
 };
+
+export const eventDefaultValues = {
+  title: '',
+  description: '',
+  location: '',
+  imageUrl: '',
+  startDateTime: new Date(),
+  endDateTime: new Date(),
+  categoryId: '',
+  price: '',
+  isFree: false,
+  url: '',
+};
+export const compaignDefaultValues = {
+  title: '',
+  description: '',
+  imageUrl: '',
+  startDateTime: new Date(),
+  endDateTime: new Date(),
+  comCategoryId: '',
+  goal: '',
+
+};

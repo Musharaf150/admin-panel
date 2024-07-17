@@ -1,9 +1,5 @@
 /* eslint-disable no-unused-vars */
 
-declare type SearchParamProps = {
-  params: { [key: string]: string };
-  searchParams: { [key: string]: string | string[] | undefined };
-};
 
 // ========================================
 
@@ -205,6 +201,7 @@ declare interface TotlaBalanceBoxProps {
 }
 
 declare  interface HeaderCartProps {
+  cls: string;
   btnTitle: string
 }
 
@@ -238,17 +235,11 @@ declare interface TransactionHistoryTableProps {
   page: number;
 }
 
-declare interface CategoryBadgeProps {
-  category: string;
-}
 
 declare interface TransactionTableProps {
   transactions: Transaction[];
 }
 
-declare interface CategoryProps {
-  category: CategoryCount;
-}
 
 declare interface DoughnutChartProps {
   accounts: Account[];
@@ -348,6 +339,14 @@ export type UpdateUserParams = {
   photo: string
 }
 
+export interface UserProps {
+  clerkId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  photo: string;
+}
+
 // ====== EVENT PARAMS
 export type CreateEventParams = {
   userId: string
@@ -369,7 +368,7 @@ export type CreateEventParams = {
 export type UpdateEventParams = {
   userId: string
   event: {
-    _id: string
+    _id: string | undefined
     title: string
     imageUrl: string
     description: string
@@ -396,6 +395,13 @@ export type GetAllEventsParams = {
   page: number
 }
 
+export type GetAllUsersParams = {
+  query: string
+  category: string
+  limit: number
+  page: number
+}
+
 export type GetEventsByUserParams = {
   userId: string
   limit?: number
@@ -409,6 +415,12 @@ export type GetRelatedEventsByCategoryParams = {
   page: number | string
 }
 
+export type GetRelatedCompaignsByComCategoryParams = {
+  comCategoryId: string
+  compaignId: string
+  limit?: number
+  page: number | string
+}
 export type Event = {
   _id: string
   title: string
@@ -453,6 +465,16 @@ export type CreateOrderParams = {
   createdAt: Date
 }
 
+export type OrdersProps ={
+  createdAt: Date.now,
+  stripeId: String,
+  totalAmount: String,
+  event: {
+    eventTitle: '$event.title',
+    eventId: '$event._id',
+  },
+  buyerId: string,
+}
 export type GetOrdersByEventParams = {
   eventId: string
   searchString: string
@@ -463,6 +485,128 @@ export type GetOrdersByUserParams = {
   limit?: number
   page: string | number | null
 }
+
+// ====== COMPAIGN PARAMS
+export type CreateCompaignParams = {
+  userId: string
+  compaign: {
+    title: string
+    description: string
+    imageUrl: string
+    startDateTime: Date
+    endDateTime: Date
+    comCategoryId?: string
+    isZakatEligible: boolean
+   goal: string
+  }
+  path: string
+}
+
+export type UpdateCompaignParams = {
+  userId: string
+  compaign: {
+    _id: string | undefined
+    title: string
+    description: string
+    imageUrl: string
+    startDateTime: Date
+    endDateTime: Date
+    comCategoryId: string
+    isZakatEligible: boolean
+   goal: string
+  }
+  path: string
+}
+
+export type DeleteCompaignParams = {
+  compaignId: string
+  path: string
+}
+
+export type GetAllCompaignsParams = {
+  query: string
+  comCategory: string
+  limit: number
+  page: number
+}
+
+export type GetCompaignsByUserParams = {
+  userId: string
+  limit?: number
+  page: number
+}
+
+export type GetRelatedCompaignsByComCategoryParams = {
+  comCategoryId: string
+  compaignId: string
+  limit?: number
+  page: number | string
+}
+
+export type Compaign = {
+  _id: string
+  title: string
+  description: string
+  goal: string
+  imageUrl: string
+  startDateTime: Date
+  endDateTime: Date
+  isZakatEligible: boolean
+  organizer: {
+    _id: string
+    firstName: string
+    lastName: string
+  }
+  comCategory: {
+    _id: string
+    name: string
+  }
+}
+
+// ====== COMCATEGORY PARAMS
+export type CreateComCategoryParams = {
+  comCategoryName: string
+}
+
+// ====== COMRAISED PARAMS
+export type CheckoutComRaisedParams = {
+  compaignTitle: string
+  compaignId: string
+  goal: string
+  donorId: string
+}
+
+export type CreateComRaisedParams = {
+  stripeId: string
+  compaignId: string
+  donorId: string
+  raisedAmount: string
+  createdAt: Date
+}
+
+export type ComRaisedProps ={
+  createdAt: Date.now,
+  stripeId: String,
+  raisedAmount: String,
+  compaign: {
+    compaignTitle: '$compaign.title',
+    compaignId: '$compaign._id',
+  },
+  donorId: string,
+}
+export type GetByCompaignParams = {
+  compaignId: string
+  searchString: string
+}
+
+export type GetComRaisedByUserParams = {
+  userId: string | null
+  limit?: number
+  page: string | number | null
+}
+
+
+
 
 // ====== URL QUERY PARAMS
 export type UrlQueryParams = {

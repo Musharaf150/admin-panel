@@ -20,7 +20,7 @@ const pathname = usePathname();
 
                 <Image src="/icons/logo.png"
                 alt='logo' width={54} height={54}
-                className='size-12
+                className='size-12 md:ml-5 xl:ml-0
                 max-xl:size-16'/>
                 <h1 className='sidebar-logo'>
                     Hope

@@ -11,4 +11,4 @@ const DashboardHero = () => {
   )
 }
 
-export default DashboardHero
+export default DashboardHero 

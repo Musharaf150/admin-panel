@@ -1,6 +1,8 @@
-import type { Config } from "tailwindcss";
+/** @type {import('tailwindcss').Config} */
+import { Config } from 'tailwindcss';
+import { withUt } from 'uploadthing/tw';
 
-const config = {
+module.exports = withUt({
   darkMode: ["class"],
   content: [
     "./pages/**/*.{ts,tsx}",
@@ -20,6 +22,22 @@ const config = {
     },
     extend: {
       colors: {
+        primary: {
+          500: '#624CF5',
+          50: ' #F6F8FD',
+          DEFAULT: '#624CF5',
+          foreground: 'hsl(var(--primary-foreground))',
+        },
+        coral: {
+          500: '#15BF59',
+        },
+
+        grey: {
+          600: '#545454', // Subdued - color name in figma
+          500: '#757575',
+          400: '#AFAFAF', // Disabled - color name in figma
+          50: '#F6F6F6', // White Grey - color name in figma
+        },
         fill: {
           1: "rgba(255, 255, 255, 0.10)",
         },
@@ -104,6 +122,4 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate")],
-} satisfies Config;
-
-export default config;
+}) satisfies Config;
