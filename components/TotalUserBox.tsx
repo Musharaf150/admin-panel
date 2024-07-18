@@ -5,7 +5,7 @@ import Image from 'next/image'
 import { useEffect, useState } from 'react';
 
 interface User {
-  id: string;
+  id?: string;
   clerkId: string;
   email: string;
   firstName: string;
