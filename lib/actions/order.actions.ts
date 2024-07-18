@@ -1,11 +1,11 @@
 "use server"
 
 import Stripe from 'stripe';
-import { GetOrdersByEventParams } from "@/types"
-import { handleError } from '../utils';
+import { CreateOrderParams, GetOrdersByEventParams } from "@/types"
 import { connectToDatabase } from '../database';
 import Order from '../database/models/order.model';
 import {ObjectId} from 'mongodb';
+import { handleError } from '../utils';
 
 
 
@@ -102,6 +102,25 @@ export async function getOrdersByEvent({ searchString = '', eventId }: GetOrders
   } catch (error) {
     console.error(error)
     throw new Error('Failed to fetch orders')
+  }
+}
+
+export const createOrder = async (order: CreateOrderParams) => {
+  try {
+    await connectToDatabase();
+    
+    const newOrder = await Order.create({
+      ...order,
+      event: order.eventId,
+      buyer: order.buyerId,
+    });
+
+    console.log(newOrder)
+
+    return JSON.parse(JSON.stringify(newOrder));
+    
+  } catch (error) {
+    handleError(error);
   }
 }
 
