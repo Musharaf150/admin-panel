@@ -4,12 +4,21 @@ import HeaderBox from '@/components/HeaderBox';
 import Headercart from '@/components/Headercart';
 import Search from '@/components/Search';
 import { getAllUsers } from '@/lib/actions/admin.actions';
-import { UserProps } from '@/types';
 import React, { useEffect, useState } from 'react';
 
+export type User = {
+  clerkId: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+};
 
-function Users({}:UserProps) {
-  const [users, setUsers] = useState<UserProps[]>([]); // Explicitly define the type of users as User[]
+export type UserProps = {
+  users: User[]; // Assuming you are passing an array of users
+};
+
+function Users() {
+  const [users, setUsers] = useState<User[]>([]); // Explicitly define the type of users as User[]
 
   useEffect(() => {
     async function fetchUsers() {
