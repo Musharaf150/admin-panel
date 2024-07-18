@@ -338,8 +338,7 @@ export type UpdateUserParams = {
   lastName: string
   photo: string
 }
-
-export interface UserProps {
+interface UserProps {
   clerkId: string;
   email: string;
   firstName: string;

@@ -8,7 +8,6 @@ import { UserProps } from '@/types';
 import React, { useEffect, useState } from 'react';
 
 
-
 function Users({}:UserProps) {
   const [users, setUsers] = useState<UserProps[]>([]); // Explicitly define the type of users as User[]
 
