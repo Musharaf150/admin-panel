@@ -23,10 +23,6 @@ export const createCompaign = async ({compaign,userId,path}:CreateCompaignParams
 
         console.log(organizer)
     
-        if(!organizer){
-            throw new Error("Organizer not found");
-        }
-    
         const newCompaign = await Compaign.create({ ...compaign, comCategory: compaign.comCategoryId, organizer: userId })
         revalidatePath(path)
 
