@@ -21,7 +21,6 @@ const Orders = ({ searchParams }: SearchParamProps) => {
 
   const eventId = searchParams?.eventId || ''
   const searchText = searchParams?.query || ''
-  console.log(eventId)
 
   useEffect(() => {
     const fetchOrders = async () => {

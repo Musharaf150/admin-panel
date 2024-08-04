@@ -45,18 +45,12 @@ export async function getAllOrders() {
 
 
 
-export async function getOrdersByEvent({ searchString = '', eventId }: GetOrdersByEventParams) {
+export async function getOrdersByEvent({ searchString, eventId }: GetOrdersByEventParams) {
   try {
     await connectToDatabase()
 
-    const matchStage: any = {}
-    if (eventId) {
-      const eventObjectId = new ObjectId(eventId)
-      matchStage.event = eventObjectId
-    }
-    if (searchString) {
-      matchStage['buyer'] = { $regex: RegExp(searchString, 'i') }
-    }
+    if (!eventId) throw new Error('Event ID is required')
+    const eventObjectId = new ObjectId(eventId)
 
     const orders = await Order.aggregate([
       {
@@ -91,17 +85,19 @@ export async function getOrdersByEvent({ searchString = '', eventId }: GetOrders
           buyer: {
             $concat: ['$buyer.firstName', ' ', '$buyer.lastName'],
           },
+          buyerEmail: '$buyer.email',
         },
       },
       {
-        $match: matchStage,
+        $match: {
+          $and: [{ eventId: eventObjectId }, { buyer: { $regex: RegExp(searchString, 'i') } }],
+        },
       },
     ])
 
     return JSON.parse(JSON.stringify(orders))
   } catch (error) {
-    console.error(error)
-    throw new Error('Failed to fetch orders')
+    handleError(error)
   }
 }
 

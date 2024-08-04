@@ -197,7 +197,7 @@ declare interface BankTabItemProps {
 }
 
 declare interface TotlaBalanceBoxProps {
-  totalCurrentBalance: number;
+  totalCurrentBalance: string;
 }
 
 declare  interface HeaderCartProps {

@@ -5,6 +5,7 @@ import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
 import { auth } from '@clerk/nextjs/server'
+import SocialMediaButton from './SocialMediaButton'
 
 type CardProps = {
   event: IEvent,
@@ -15,6 +16,11 @@ type CardProps = {
 const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+
+  const shareUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/events/${event._id}`;
+  const shareTitle = event.title;
+  const shareDescription = event.description;
+  const shareImage = event.imageUrl;
 
 
   return (
@@ -68,6 +74,8 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
               <Image src="/assets/icons/arrow.svg" alt="search" width={10} height={10} />
             </Link>
           )}
+                  <SocialMediaButton shareUrl={shareUrl} shareTitle={shareTitle} shareDescription={shareDescription} shareImage={shareImage}/>
+
         </div>
       </div>
     </div>

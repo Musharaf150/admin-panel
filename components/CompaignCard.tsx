@@ -6,6 +6,9 @@ import { auth } from '@clerk/nextjs/server'
 import { ICompaign } from '@/lib/database/models/compaign.model'
 import { Button } from './ui/button'
 import { ComDeleteConfirmation } from './ComDeleteConfirmation'
+import { FacebookShareButton, TwitterShareButton, LinkedinShareButton, WhatsappShareButton, EmailShareButton } from 'react-share';
+import { FacebookIcon, TwitterIcon, LinkedinIcon, WhatsappIcon, EmailIcon } from 'react-share';
+import SocialMediaButton from './SocialMediaButton'
 
 type CardProps = {
   compaign: ICompaign,
@@ -15,6 +18,12 @@ type CardProps = {
 const Card = ({ compaign, hasOrderLink}: CardProps) => {
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+
+
+  const shareUrl = `${process.env.NEXT_PUBLIC_SERVER_URL}/compaigns/${compaign._id}`;
+  const shareTitle = compaign.title;
+  const shareDescription = compaign.description;
+  const shareImage = compaign.imageUrl;
 
 
 
@@ -83,18 +92,18 @@ const Card = ({ compaign, hasOrderLink}: CardProps) => {
               </div>
 
         <div className="flex-between w-full">
-          {/* <p className="p-medium-14 md:p-medium-16 text-grey-600">
-            {compaign.organizer.firstName} {compaign.organizer.lastName}
-
-          </p>  */}
-
+        
           {!hasOrderLink && (
             <Link href={`/compaign?compaignId=${compaign._id}`} className="flex gap-2">
               <p className="text-primary-500">Order Details</p>
               <Image src="/assets/icons/arrow.svg" alt="search" width={10} height={10} />
             </Link>
           )}
+
+        <SocialMediaButton shareUrl={shareUrl} shareTitle={shareTitle} shareDescription={shareDescription} shareImage={shareImage}/>
         </div>
+        
+
       </div>
     </div>
   )

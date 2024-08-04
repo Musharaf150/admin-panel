@@ -21,8 +21,7 @@ const Orders = ({ searchParams }: SearchParamProps) => {
 
   const eventId = searchParams?.eventId || ''
   const searchText = searchParams?.query || ''
-  console.log(eventId)
-
+  
   useEffect(() => {
     const fetchOrders = async () => {
       try {
@@ -39,13 +38,16 @@ const Orders = ({ searchParams }: SearchParamProps) => {
     fetchOrders()
   }, [eventId, searchText])
 
+    // Calculate the total amount
+    const totalAmount = orders.reduce((acc, order) => acc + parseFloat(order.totalAmount), 0);
+
   if (loading) return <div>Loading...</div>
   if (error) return <div>{error}</div>
 
   return (
     <>
       <section className="bg-primary-50 bg-dotted-pattern bg-cover bg-center py-5 md:py-10">
-        <h3 className="wrapper h3-bold text-center sm:text-left">Orders</h3>
+        <h3 className="wrapper h3-bold text-center sm:text-left">Ticket Orders</h3>
       </section>
 
       <section className="wrapper mt-8">
@@ -58,9 +60,10 @@ const Orders = ({ searchParams }: SearchParamProps) => {
             <tr className="p-medium-14 border-b text-grey-500">
               <th className="min-w-[250px] py-3 text-left">Order ID</th>
               <th className="min-w-[200px] flex-1 py-3 pr-4 text-left">Event Title</th>
-              <th className="min-w-[150px] py-3 text-left">Buyer</th>
+              <th className="min-w-[150px] py-3 text-left">Buyer Name</th>
+              <th className="min-w-[150px] py-3 text-left">Buyer Email</th>
               <th className="min-w-[100px] py-3 text-left">Created</th>
-              <th className="min-w-[100px] py-3 text-right">Amount</th>
+              <th className="min-w-[100px] py-3 text-left">Amount</th>
             </tr>
           </thead>
           <tbody>
@@ -80,13 +83,25 @@ const Orders = ({ searchParams }: SearchParamProps) => {
                   <td className="min-w-[250px] py-4 text-primary-500">{row._id}</td>
                   <td className="min-w-[200px] flex-1 py-4 pr-4">{row.eventTitle}</td>
                   <td className="min-w-[150px] py-4">{row.buyer}</td>
+                  <td className="min-w-[150px] py-4">{row.buyerEmail}</td>
                   <td className="min-w-[100px] py-4">{formatDateTime(row.createdAt).dateTime}</td>
-                  <td className="min-w-[100px] py-4 text-right">{formatPrice(row.totalAmount)}</td>
+                  <td className="min-w-[100px] py-4 text-left">{formatPrice(row.totalAmount)}</td>
                 </tr>
+
+              
+
+                
               ))
             )}
           </tbody>
+          <tfoot>
+            <tr>
+              <td colSpan={5} className="min-w-[100px] py-3 text-right px-3">Total Amount:</td>
+              <td className="min-w-[100px] py-4 text-left font-semibold">{formatPrice(totalAmount.toString())}</td>
+            </tr>
+          </tfoot>
         </table>
+
       </section>
     </>
   )

@@ -2,7 +2,7 @@
 
 import CountUp from "react-countup";
 
-const AnimatedCounter = ({ amount }: { amount: number }) => {
+const AnimatedCounter = ({ amount }: { amount: number}) => {
   return (
     <div className="w-full">
       <CountUp decimal="," prefix="PKR " duration={1.75}  decimals={2} end={amount} />
